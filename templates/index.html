@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+ <title>Respiratory Disease ClassificationUsing Lung Sounds</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+  <!-- Favicons -->
+  <link href="../static/img/favicon.png" rel="icon">
+  <link href="../static/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="../static/vendor/aos/aos.css" rel="stylesheet">
+  <link href="../static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../static/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../static/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="../static/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="../static/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="../static/css/style2.css" rel="stylesheet">
+
+  <!-- Firebase Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+  <script>
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyA-pouPitkIGgyNBzXAtqtnxnM2m9GbFuM",
+      authDomain: "capstone-f5d03.firebaseapp.com",
+      projectId: "capstone-f5d03",
+      storageBucket: "capstone-f5d03.appspot.com",
+      messagingSenderId: "978581004811",
+      appId: "1:978581004811:web:9bf6bb533cdc8dca931d0e"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    // Reference to the Realtime Database
+    const database = firebase.database();
+  </script>
+
+  <!-- =======================================================
+  * Template Name: Kelly - v4.6.0
+  * Template URL: https://bootstrapmade.com/kelly-free-bootstrap-cv-resume-html-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+
+
+<body>
+  <!-- ======= Top Bar ======= -->
+  <div id="topbar" class="d-flex align-items-center fixed-top">
+    <div class="container d-flex justify-content-center justify-content-md-between">
+      <!-- Top Bar content, if any, can be added here -->
+    </div>
+  </div>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top d-flex align-items-center">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-lg-between">
+      <h1 class="col-lg-8">
+        <a href="index.html"><span>Respiratory Disease Classification</span></a>
+      </h1>
+
+      <nav id="navbar" class="navbar order-last order-lg-0">
+        <ul>
+          <li><a class="nav-link scrollto active" href="{{ url_for('first')}}">Home</a></li>
+          <li><a class="nav-link scrollto" href="{{ url_for('index')}}">Predict</a></li>
+          <li><a class="nav-link scrollto" href="{{ url_for('chart')}}">Analysis</a></li>
+          <li><a class="nav-link scrollto" href="{{ url_for('model')}}">Model</a></li>
+          <li><a class="nav-link scrollto" href="{{ url_for('precautions')}}">Precautions</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+    </div>
+  </header><!-- End Header -->
+
+  <!-- ======= Hero Section ======= -->
+  <section id="hero" class="d-flex align-items-center">
+    <div class="container position-relative text-center text-lg-start" data-aos="zoom-in" data-aos-delay="100">
+      <div class="row">
+        <div class="col-lg-8">
+          <h1>Impilo: An AI Device to Detect Early Lung Cancer Using Cough Analysis</h1>
+        </div>
+      </div>
+    </div>
+  </section><!-- End Hero -->
+
+  <main id="main">
+
+
+    {% if ospf %}
+    <div class="body-index">
+      <div class="titleColor">
+        <h1 class="text-center">Respiratory Disorder Classification Using Lung Cancer Sounds</h1>
+      </div>
+
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+          <form action="#" method="POST" enctype="multipart/form-data" id="patient-form">
+            <div class="mb-3">
+              <label for="name">Patient Name:</label>
+              <input type="text" class="form-control" id="name" name="name" required />
+            </div>
+
+            <div class="mb-3">
+              <label for="age">Age:</label>
+              <input type="number" class="form-control" id="age" name="age" required min="0" placeholder="Enter age" />
+            </div>
+
+            <div class="mb-3">
+              <label for="sickness">Sickness:</label>
+              <input type="text" class="form-control" id="sickness" name="sickness" placeholder="Enter the sickness" />
+            </div>
+
+            <div class="mb-3">
+              <label for="healthHistory">Health History:</label>
+              <textarea class="form-control" id="healthHistory" name="healthHistory" rows="3"
+                placeholder="Describe any existing health conditions..."></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label for="address">Address:</label>
+              <input type="text" class="form-control" id="address" name="address" required placeholder="123 Main St, City" />
+            </div>
+
+            <div class="mb-3">
+              <label for="contact">Contact Number:</label>
+              <input type="text" class="form-control" id="contact" name="contact" required placeholder="(123) 456-7890" />
+            </div>
+
+            <div class="mb-3">
+              <label for="lungSounds">Input Patient Lung Cancer Sound File (.wav format):</label>
+              <input type="file" name="lungSounds" class="my-3" onchange="readURL(this);" accept=".wav" required />
+            </div>
+            <button type="submit" class="btn btn-primary my-3">Analyze Lung Sound</button>
+            <button type="button" class="btn btn-success my-3" onclick="submitData()">Data Collection</button>
+            <button type="button" class="btn btn-info my-3" onclick="retrieveData()">Review Patient Report</button>
+
+ <!-- Real-time recording section -->
+ <div class="mb-2">
+  <label for="realtimeRecording"><strong><h3>Or record in real-time:</h3></strong></label>
+  <br>
+<button id="recordButton" onclick="startRecording()">Start Recording</button>
+<button id="stopButton" onclick="stopRecording()" disabled>Stop Recording</button>
+<span id="recordingStatus" style="color: red; font-weight: bold; display: none;">Recording...</span>
+<span id="timer" style="color: green; font-weight: bold;">00:00</span>
+
+  <!-- Audio Playback -->
+<div id="playbackSection" style="display: none; margin-top: 20px;">
+  <label for="audioPlayback" style="font-weight: bold; display: block; margin-bottom: 10px;">
+      Your Recorded Audio:
+  </label>
+  <audio id="audioPlayback" controls style="width: 100%; margin-top: 10px;"></audio>
+</div>
+
+
+ <!-- Text and spinner for loading -->
+<div id="loadingContainer" style="display: none;">
+<div id="loadingSpinner" class="spinner-border" role="status">
+<span class="visually-hidden">Loading...</span>
+</div>
+<div id="loadingText" style="font-weight: bold; display: none;">Please wait, your cough is being analyzed...</div>
+</div>
+
+<!-- Status of the upload -->
+ <p id="uploadStatus" style="color: blue;"></p>
+ </div>
+          </form>
+        </div>
+      </div>
+
+
+<!-- Audio script  recording -->
+      <script>
+        let mediaRecorder;
+        let audioChunks = [];
+        let audioBlob;
+        let timerInterval;
+        let seconds = 0;
+        
+        
+        function startRecording() {
+            navigator.mediaDevices.getUserMedia({ audio: true })
+            .then(stream => {
+                mediaRecorder = new MediaRecorder(stream);
+                mediaRecorder.start();
+                audioChunks = [];
+        
+                document.getElementById('recordingStatus').style.display = 'inline';
+                document.getElementById('timer').style.display = 'inline';
+                document.getElementById('recordButton').disabled = true;
+                document.getElementById('stopButton').disabled = false;
+                startTimer();
+        
+                mediaRecorder.ondataavailable = function(event) {
+                    audioChunks.push(event.data);
+                };
+        
+                mediaRecorder.onstop = function() {
+                    audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                    const audioUrl = URL.createObjectURL(audioBlob);
+                    document.getElementById('audioPlayback').src = audioUrl;
+                    document.getElementById('playbackSection').style.display = 'block';
+                    document.getElementById('recordingStatus').style.display = 'none';
+                    stopTimer();
+        
+                    // Check if recording meets minimum duration
+                    if (seconds < MIN_RECORD_DURATION) {
+                        alert(`Recording is too short. Please record for at least ${MIN_RECORD_DURATION} seconds.`);
+                        return;
+                    }
+        
+                    // Show loading spinner and analyze audio
+                    showLoading();
+                    analyzeAudio(audioBlob);
+                };
+            })
+            .catch(error => {
+                console.error('Error accessing audio stream:', error);
+                alert('Error accessing microphone. Please check your permissions.');
+            });
+        }
+        
+        function stopRecording() {
+            if (mediaRecorder) {
+                mediaRecorder.stop();
+                document.getElementById('recordButton').disabled = false;
+                document.getElementById('stopButton').disabled = true;
+            }
+        }
+        
+        function startTimer() {
+            seconds = 0;
+            timerInterval = setInterval(function() {
+                seconds++;
+                document.getElementById('timer').innerText = formatTime(seconds);
+            }, 1000);
+        }
+        
+        function stopTimer() {
+            clearInterval(timerInterval);
+            document.getElementById('timer').innerText = '00:00'; // Reset timer
+        }
+        
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = seconds % 60;
+            return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
+        }
+        
+        function analyzeAudio(audioBlob) {
+            const formData = new FormData();
+            formData.append('lungSounds', audioBlob, 'lung_sound.wav');
+        
+            fetch('model', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('uploadStatus').innerText = 'Analysis complete! Redirecting...';
+                hideLoading();
+                setTimeout(() => {
+                    window.location.href = '/model'; // Adjust URL as per Flask routing
+                }, 2000);
+            })
+            .catch(error => {
+                document.getElementById('uploadStatus').innerText = 'Analysis failed!';
+                hideLoading();
+                console.error('Error:', error);
+            });
+        }
+        
+        function showLoading() {
+            document.getElementById('loadingText').style.display = 'block';
+            document.getElementById('loadingSpinner').style.display = 'block';
+        }
+        
+        function hideLoading() {
+            document.getElementById('loadingText').style.display = 'none';
+            document.getElementById('loadingSpinner').style.display = 'none';
+        }
+    
+        // New function to handle playback before submission
+        function playRecordedAudio() {
+            const audioElement = document.getElementById('audioPlayback');
+            if (audioElement) {
+                audioElement.play();
+            }
+        }
+    </script>
+    
+    
+    
+      <script type="text/javascript">
+        function readURL(input) {
+          if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+              document.getElementById("lungSounds").src = e.target.result;
+            };
+            reader.readAsDataURL(input.files[0]);
+          }
+        } 
+      </script>
+    </div>
+
+
+    {% endif %} <!-- This closes the first if block -->
+
+
+
+  
+
+
+    {% if ospf == 0 %}
+
+    <div class="prediction">
+      <h1 id="name" class="text-center my-3 py-2 border border-secondary">Patient Report of {{n}}</h1>
+      <div class="container">
+        <h2 class="my-2 no-print">Given Sound File:</h2>
+        <audio controls class="no-print">
+          <source src="{{lungSounds}}" type="audio/wav" alt="{{n}} lung sounds" />
+          Your browser does not support the audio element.
+          </audio>
+          <br />
+
+        <div class="row my-3">
+          <!-- First Image -->
+          <div class="col-md-6 text-center">
+            <img id="lungSounds" src="{{ url_for('static', filename='uploads/outSoundWave.png') }}" alt="lung sounds img" width="500" height="500" />
+            <p class="mt-2">Sound Wave Representation</p> <!-- Description for the first image -->
+          </div>
+
+          <!-- Second Image -->
+          <div class="col-md-6 text-center">
+            <img id="lungSounds2" src="{{ url_for('static', filename='uploads/outSoundMFCC.png') }}" alt="lung sounds MFCC img" width="500" height="500" />
+            <p class="mt-2">MFCC Representation of Lung Sounds</p> <!-- Description for the second image -->
+          </div>
+        </div>
+
+        <div class="jumbotron jumbotron-fluid my-2 px-2">
+          <h2 class="my-2">{{ res[0] if res[0] != 'Lung Cancer Not Detected' else '' }}</h2>
+        </div>
+
+
+        <button type="button" class="btn btn-info my-3" onclick="loadPatientForm()">Review Patient Report</button>
+
+      </div>
+    </div>
+
+    {% endif %} <!-- This closes the second if block -->
+  </main>
+
+
+
+<!-- Modal Pop-up for Retrieved Data -->
+<div id="retrievedDataModal" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Retrieved Patient Data</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <p id="retrieved-data"></p>
+        <div class="row">
+          <!-- Prediction Images -->
+          <div class="col-md-6 text-center">
+            <img id="lungSounds2" src="{{ url_for('static', filename='uploads/outSoundMFCC.png') }}" alt="lung sounds MFCC img" width="230" height="250"/>
+            <p class="mt-2">Retrieved Sound Wave Representation</p>
+          </div>
+
+          <div class="col-md-6 text-center">
+            <img id="lungSounds" src="{{ url_for('static', filename='uploads/outSoundWave.png') }}" alt="lung sounds img" width="230" height="250"/>
+            <p class="mt-2">Retrieved MFCC Representation</p>
+          </div>
+        </div>
+
+        <!-- Add a paragraph for the findings -->
+        <div style="text-align: justify; padding: 20px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9;">
+          <h5 style="text-align: center; color: #4CAF50;">🎉 Analysis Complete! 🎉</h5>
+          
+          <p style="font-size: 16px; line-height: 1.6;">
+              Great news! After analyzing your recorded cough audio, our advanced algorithms detected <strong>no significant correlations</strong> with common respiratory issues. This indicates that your cough sounds are consistent with healthy lung function! 🚀
+          </p>
+      
+          <h5 style="color: #4CAF50;">How We Analyzed Your Cough:</h5>
+          <ul style="margin-left: 20px; font-size: 16px;">
+              <li><strong>Sound Wave Analysis:</strong> We examined the sound wave patterns for any irregularities.</li>
+              <li><strong>MFCC Extraction:</strong> Mel-frequency cepstral coefficients (MFCCs) were calculated to assess frequency characteristics associated with respiratory diseases.</li>
+              <li><strong>Pattern Recognition:</strong> Our model searched for specific markers linked to conditions like lung cancer, COPD, and pneumonia.</li>
+          </ul>
+      
+          <h5 style="color: #4CAF50;">Key Findings:</h5>
+          
+          <ul style="margin-left: 20px; font-size: 16px;">
+              <li><strong>No Correlations Detected:</strong></li>
+              <ul>
+                  <li><strong>Lung Cancer:</strong> No abnormal frequency patterns indicative of malignancy.</li>
+                  <li><strong>COPD:</strong> No signs of wheezing, crackling, or airway obstruction.</li>
+                  <li><strong>Pneumonia:</strong> No evidence of fluid accumulation detected.</li>
+              </ul>
+          </ul>
+      
+          <h5 style="color: #4CAF50;">What This Means for You:</h5>
+          <p style="font-size: 16px; line-height: 1.6;">
+              Your lungs are functioning optimally, and our analysis shows <strong>no signs</strong> of lung cancer or other respiratory conditions.
+          </p>
+      
+      </div>
+      
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script type="text/javascript">
+
+ // Data Collection Functionality
+  document.getElementById("submit-data-btn").addEventListener("click", function() {
+    // Functionality to collect data into the database
+    alert('Data Collection functionality will go here');
+  });
+
+  // Retrieve Data Functionality
+  function retrieveData() {
+    var patientName = document.getElementById('name').value;
+
+    // Reference the Firebase database and retrieve the patient's data
+    var database = firebase.database();
+    var ref = database.ref('patients/' + patientName);
+
+    ref.once('value')
+      .then(function(snapshot) {
+        var patientData = snapshot.val();
+        if (patientData) {
+          // Display patient data in the modal
+          document.getElementById('retrieved-data').innerHTML =
+            '<strong>Patient Name:</strong> ' + patientName + '<br>' +
+            '<strong>Age:</strong> ' + patientData.age + '<br>' +
+            '<strong>Sickness:</strong> ' + patientData.sickness + '<br>' +
+            '<strong>Health History:</strong> ' + patientData.healthHistory + '<br>' +
+            '<strong>Address:</strong> ' + patientData.address + '<br>' +
+            '<strong>Contact Number:</strong> ' + patientData.contact + '<br>';
+
+          // Set the images if available in the retrieved data
+          if (patientData.lungSoundWave && patientData.lungMFCC) {
+            document.getElementById('retrievedLungSounds').src = patientData.lungSoundWave;
+            document.getElementById('retrievedLungSounds2').src = patientData.lungMFCC;
+          }
+
+          // Show the modal
+          document.getElementById('retrievedDataModal').style.display = 'block';
+        } else {
+          alert('No data found for patient: ' + patientName);
+        }
+      })
+      .catch(function(error) {
+        console.error('Error retrieving data: ', error);
+        alert('Error retrieving data for patient: ' + patientName);
+      });
+  }
+
+  // Close modal function
+  function closeModal() {
+    document.getElementById('retrievedDataModal').style.display = 'none';
+  }
+
+
+
+  function loadPatientForm() {
+    fetch('/predict')  // Adjust this if necessary to match your route for the form
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text();
+        })
+        .then(data => {
+            // Assuming you have a div with id 'form-container' to load the form into
+            document.getElementById('form-container').innerHTML = data;
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
+}
+
+</script>
+
+
+
+
+
+
+<script type="text/javascript">
+
+  // Function to handle stop recording event
+  function onStopRecording() {
+    // Hide loading spinner and message
+    hideLoading();
+
+    // Show the retrieved images after processing is done
+    updateRetrievedImages();
+
+    // Show the modal after recording stops
+    $('#retrievedDataModal').modal('show');
+  }
+
+  // Function to show loading spinner and message
+  function showLoading() {
+    document.getElementById('loadingContainer').style.display = 'block'; // Show the entire loading container
+    document.getElementById('loadingSpinner').style.display = 'block';
+    document.getElementById('loadingText').style.display = 'block';
+  }
+
+  // Function to hide loading spinner and message
+  function hideLoading() {
+    document.getElementById('loadingContainer').style.display = 'none'; // Hide the entire loading container
+  }
+
+  // Function to update retrieved images dynamically
+  function updateRetrievedImages() {
+    // Assuming the images are saved on the server and accessible via a known path
+    document.getElementById('lungSounds2').src = "{{ url_for('static', filename='img/outSoundWave.png') }}"; // Update MFCC image
+    document.getElementById('lungSounds').src = "{{ url_for('static', filename='img/outSoundMFCC.png') }}"; // Update MFCC image
+
+  }
+
+  // Function to stop recording and display loading spinner
+  function stopRecording() {
+    if (mediaRecorder) {
+      mediaRecorder.stop();
+      document.getElementById('recordButton').disabled = false;
+      document.getElementById('stopButton').disabled = true;
+
+      // Show loading spinner and text
+      showLoading();
+      document.getElementById('loadingText').innerText = 'Your cough is being processed, please wait...';
+
+      // Simulate a delay (e.g., processing time) before showing the modal
+      setTimeout(onStopRecording, 10000); // 10 seconds delay
+    }
+  }
+
+  // Function to close modal
+  function closeModal() {
+    $('#retrievedDataModal').modal('hide');
+  }
+
+</script>
+
+
+
+
+<!-- Chatbot -->
+<script>
+  window.embeddedChatbotConfig = {
+  chatbotId: "2YnIKbBm6yc0p2nYHZwS_",
+  domain: ""
+  }
+  </script>
+  <script
+  src="https://www.chatbase.co/embed.min.js"
+  chatbotId="2YnIKbBm6yc0p2nYHZwS_"
+  domain="www.chatbase.co"
+  defer>
+  </script>
+
+
+
+
+
+
+ <!-- Firebase submission script -->
+ <script>
+  function submitData() {
+    // Capture form data
+    const patientName = document.getElementById("name").value;
+    const patientAge = document.getElementById("age").value;
+    const patientSickness = document.getElementById("sickness").value;
+    const patientHealthHistory = document.getElementById("healthHistory").value;
+    const patientAddress = document.getElementById("address").value;
+    const patientContact = document.getElementById("contact").value;
+
+
+    // Push data to Firebase Realtime Database
+    database.ref('patients/' + patientName).set({
+      name: patientName,
+      age: patientAge,
+      sickness: patientSickness,
+      healthHistory: patientHealthHistory,
+      address: patientAddress,
+      contact: patientContact,
+    }).then(() => {
+      alert('Data successfully saved to Firebase!');
+    }).catch((error) => {
+      console.error('Error saving data: ', error);
+    });
+  }
+  
+</script>
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
+
+<!-- https://api.netlify.com/api/v1/sites/180c5660-b729-4cde-8c90-77a7925de7e3/submissions -->
