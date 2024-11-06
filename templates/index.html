@@ -250,7 +250,7 @@
             timerInterval = setInterval(function() {
                 seconds++;
                 document.getElementById('timer').innerText = formatTime(seconds);
-            }, 1000);
+            }, 2000);
         }
         
         function stopTimer() {
@@ -259,8 +259,8 @@
         }
         
         function formatTime(seconds) {
-            const minutes = Math.floor(seconds / 60);
-            const remainingSeconds = seconds % 60;
+            const minutes = Math.floor(seconds / 120);
+            const remainingSeconds = seconds % 120;
             return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
         }
         
@@ -360,7 +360,7 @@
         </div>
 
 
-        <button type="button" class="btn btn-info my-3" onclick="loadPatientForm()">Review Patient Report</button>
+        <a href="http://127.0.0.1:5000/predict" class="btn btn-info my-3" target="_blank">Return back</a>
 
       </div>
     </div>
@@ -590,10 +590,6 @@
   domain="www.chatbase.co"
   defer>
   </script>
-
-
-
-
 
 
  <!-- Firebase submission script -->
