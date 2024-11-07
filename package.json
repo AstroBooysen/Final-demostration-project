@@ -1,0 +1,22 @@
+{
+    "name": "final-demostration-project",
+    "version": "1.0.0",
+    "description": "Impilo is an innovative platform designed to aid in the early detection of lung cancer by analysing patient lung sound data. ...",
+    "main": "patientForm.test.js",
+    "scripts": {
+        "test": "jest"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "jest": {
+        "testEnvironment": "jsdom"
+    },
+    "devDependencies": {
+        "jest-environment-jsdom": "^29.7.0"
+    },
+    "dependencies": {
+        "text-encoding": "^0.7.0",
+        "util": "^0.12.5"
+    }
+}
